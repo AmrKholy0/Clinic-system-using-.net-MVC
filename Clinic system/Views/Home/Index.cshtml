@@ -1,0 +1,112 @@
+﻿@model Inquiry
+@{
+    ViewData["Title"] = "الرئيسية";
+    Layout = "_Layout";
+    IEnumerable<Service>? services = ViewBag.Services ?? null;
+}
+
+<section id="main-photo"></section>
+<section id="clinic-intro">
+    <div class="container col-xxl-8 px-4 py-5">
+        <div
+        class="row flex-lg-row-reverse align-items-center justify-content-center g-5 py-5"
+        >
+            <div class="col-10 col-sm-8 col-lg-6">
+                <img
+                src="/imgs/2.jpg"
+                class="d-block mx-lg-auto img-fluid"
+                alt="Bootstrap Themes"
+                width="700"
+                height="500"
+                loading="lazy"
+                />
+            </div>
+            <div class="col-lg-6">
+                <h2 class="h2 fw-bold lh-1 mb-3">
+                    مرحباً بك في عيادة الدوكتور عبدالرحمن
+                </h2>
+                <p class="lead">
+                    حيث نعتني بابتسامتك بكل احترافية.
+                    نقدم خدمات طب الأسنان بأعلى معايير الجودة والراحة، لضمان حصولك على رعاية شاملة لصحة الفم والأسنان.
+                    يتخصص الدكتور عبدالرحمن في تقديم علاجات متقدمة تتراوح من التجميل إلى العلاج الوقائي.
+                    نهدف إلى خلق بيئة هادئة ومريحة لمرضانا،
+                    مع الاهتمام بأدق التفاصيل لراحة ورضا العملاء. زرنا اليوم لتحظى بابتسامة صحية وجذابة!
+                </p>
+                <a asp-action="AboutUs" asp-controller="Home" id="btn-aboutus"> إعرف المزيد </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="our-services">
+    <div class="container">
+        <h2 class="display-6 fw-bold lh-1 mb-3">خدماتنا</h2>
+            @if (services is { } && services.Any())
+            {
+                <div class="row row-cols-xxl-3 row-cols-lg-2 row-cols-sm-1">
+                    @foreach(Service service in services)
+                    {
+                        <div style="padding:20px 10px">
+                            <div class="card text-center">
+                                <img src="@($"/imgs/services/{service.ServiceImage}")" class="card-img-top" alt="@service.ServiceName">
+                                <div class="card-body">
+                                    <h5 class="card-title">@service.ServiceName</h5>
+                                    <p class="card-text">@service.ServiceDescription</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+      </div>
+    </section>
+    <section id="contact-us">
+      <div class="container">
+        <h2 class="display-6 fw-bold lh-1 mb-3">تواصل معنا</h2>
+        <form asp-action="NewInquiry" asp-controller="Home" method="post" class="">
+          <div class="form-floating">
+            <input asp-for="Name"
+              class="form-control"
+            />
+            <label asp-for="Name" >اللإسم</label>
+            <span asp-validation-for="Name"></span>
+          </div>
+          <div class="form-floating">
+            <input asp-for="EmailAddress"
+              class="form-control"
+            />
+            <label asp-for="EmailAddress">الإيميل</label>
+            <span asp-validation-for="EmailAddress"></span>
+          </div>
+          <textarea asp-for="Question" rows="7" class="form-control" placeholder="أكتب إستفسارك هنا"></textarea>
+            <span asp-validation-for="Question"></span>
+
+          <div class="d-flex justify-content-end w-100">
+            <input type="submit" value="إرسال" class="btn btn-success mt-3 mb-5 py-2 px-5" />
+          </div>
+        </form>
+      </div>
+    </section>
+    <section id="book-now-section">
+      <div class="container">
+        <div>
+            <h3 class="display-6 fw-bold lh-1 mb-3">
+                احجز موعدك الآن
+            </h3>
+          <p>
+                لا تتردد في اتخاذ الخطوة الأولى نحو ابتسامة صحية ومشرقة.
+                نوفر لك تجربة حجز سهلة وسريعة لتلبية احتياجاتك في الوقت الذي يناسبك.
+                فريقنا المتخصص مستعد لاستقبالك وتقديم أفضل خدمات العناية بالأسنان.
+                نحن هنا لضمان راحتك ورضاك في كل زيارة. اضغط على الزر أدناه لحجز موعدك الآن بكل سهولة!
+            </p>
+        </div>
+        <div>
+          <a href="" class="book-now" style="text-decoration: none"
+            >إحجز موعد</a
+          >
+        </div>
+      </div>
+    </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}
